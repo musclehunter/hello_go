@@ -8,6 +8,8 @@ import (
 type Config struct {
 	TurnSeconds int `yaml:"turn_seconds"`
 	Port int `yaml:"port"`
+	InitialPopulation int `yaml:"initial_population"`
+	MaxPopulation int `yaml:"max_population"`
 }
 
 func LoadConfig(filename string) (Config, error) {

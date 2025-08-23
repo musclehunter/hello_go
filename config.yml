@@ -1,3 +1,5 @@
 # ターンの秒数を設定します
-turn_seconds: 1
+turn_seconds: 3
 port: 8080
+initial_population: 10
+max_population: 100
