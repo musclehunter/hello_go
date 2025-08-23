@@ -10,6 +10,7 @@ type Config struct {
 	Port int `yaml:"port"`
 	InitialPopulation int `yaml:"initial_population"`
 	MaxPopulation int `yaml:"max_population"`
+	MaxTurn int `yaml:"max_turn"`
 }
 
 func LoadConfig(filename string) (Config, error) {

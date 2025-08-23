@@ -32,6 +32,8 @@ func initResidents(cfg Config) {
             if job, ok := World.GetJobById(p.MainJobID); ok {
                 area.Income += p.Level * job.Income
             }
+            // ログ: 初期住人追加
+            addLog("added", p.Name+" joined Area "+area.Name+" (level "+fmtInt(p.Level)+")")
         }
     }
 }
@@ -49,7 +51,7 @@ func addResidentsPerTurn() {
         if remaining <= 0 {
             continue
         }
-        toAdd := 5
+        toAdd := 1
         if toAdd > remaining {
             toAdd = remaining
         }
@@ -63,6 +65,8 @@ func addResidentsPerTurn() {
             if job, ok := World.GetJobById(p.MainJobID); ok {
                 area.Income += p.Level * job.Income
             }
+            // ログ: ターン追加
+            addLog("added", p.Name+" joined Area "+area.Name+" (level "+fmtInt(p.Level)+")")
             // 住人の行動ゴルーチンを開始
             wg.Add(1)
             go p.Run(appCtx, area.Id, events, &wg)

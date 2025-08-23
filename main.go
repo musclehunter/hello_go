@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"github.com/brianvoe/gofakeit/v6"
 	"context"
+	"strconv"
 )
 
 var Turn int = 0
@@ -44,10 +45,24 @@ func main() {
 	go applyEvents()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Content-Type", "application/json")
 		worldMu.RLock()
 		defer worldMu.RUnlock()
 		json.NewEncoder(w).Encode(World)
+	})
+
+	// アプリ内ログ取得エンドポイント
+	http.HandleFunc("/logs", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Content-Type", "application/json")
+		n := 100
+		if q := r.URL.Query().Get("n"); q != "" {
+			if v, err := strconv.Atoi(q); err == nil && v > 0 {
+				n = v
+			}
+		}
+		json.NewEncoder(w).Encode(getLogs(n))
 	})
 
 	go func() {
@@ -65,7 +80,7 @@ func main() {
 			action()
 			last = now
 			Turn++
-			if (Turn >= 100) {
+			if (Turn >= config.MaxTurn) {
 				Shutdown()
 			}
 		}
@@ -73,19 +88,10 @@ func main() {
 }
 
 func action() {
-    // 各ターンで各エリアに最大5人追加（MaxPopulationを超えない）
-    addResidentsPerTurn()
-
-    // 概要出力: 各エリアの人口と収入のみ
-    worldMu.RLock()
-    timestamp := time.Now().Format("2006-01-02 15:04:05")
-    fmt.Printf("[%s] Turn=%d\n", timestamp, Turn)
-    for _, a := range World.Areas {
-        fmt.Printf(" - Area %d %s: population=%d, income=%d\n", a.Id, a.Name, a.Population, a.Income)
-    }
-    worldMu.RUnlock()
-    os.Stdout.Sync()
-    SaveWorld()
-    SaveLastId()
-    time.Sleep(100 * time.Millisecond)
+	// 各ターンで各エリアに最大5人追加（MaxPopulationを超えない）
+	addResidentsPerTurn()
+	// ファイル保存のみ（標準出力は出さない）
+	SaveWorld()
+	SaveLastId()
+	time.Sleep(100 * time.Millisecond)
 }

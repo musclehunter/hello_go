@@ -1,0 +1,153 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* --- Custom styles for dashboard --- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  text-align: left;
+}
+
+.panel {
+  background: #ffffff;
+  color: #222;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border-bottom: 1px solid #eee;
+  padding: 8px 10px;
+}
+
+table thead th {
+  background: #f7f7f7;
+  color: #333;
+  position: sticky;
+  top: 0;
+}
+
+table tbody tr:hover {
+  background: #f3f4f6; /* hover gray */
+}
+
+table tbody tr.row--selected {
+  background: #fff7ed; /* amber-50 */
+}
+
+.logs {
+  height: 340px;
+  overflow: auto;
+  background: #fafafa;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.log-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: #222;
+}
+
+.log-time {
+  color: #6b7280; /* gray-500 */
+  min-width: 72px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 999px;
+  color: #111;
+  background: #e5e7eb; /* default gray */
+}
+
+.badge--acted { background: #dbeafe; color: #1e3a8a; }   /* blue */
+.badge--added { background: #dcfce7; color: #166534; }   /* green */
+.badge--death { background: #fee2e2; color: #7f1d1d; }   /* red */
+
+@media (max-width: 840px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+/* --- Tabs --- */
+.tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 8px;
+}
+.tab {
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  cursor: pointer;
+  color: #374151; /* gray-700 */
+}
+.tab:hover {
+  background: #f9fafb;
+}
+.tab--active {
+  background: #ffffff;
+  border-color: #e5e7eb #e5e7eb transparent #e5e7eb;
+  color: #111827; /* gray-900 */
+}

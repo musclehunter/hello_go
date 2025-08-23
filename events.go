@@ -2,7 +2,6 @@ package main
 
 import (
     "math/rand"
-	"fmt"
     "time"
 )
 
@@ -77,14 +76,16 @@ func applyEvents() {
                             // DeadPersons に退避してから Persons から削除
                             World.DeadPersons = append(World.DeadPersons, p)
                             World.Persons = append(World.Persons[:pi], World.Persons[pi+1:]...)
-                            // 死亡ログ
-                            fmt.Println(p.Name, "(Level ", p.Level, ") ", " died in Area ", World.Areas[ai].Name)
+                            // 死亡ログ（アプリ内ログへ）
+                            addLog("death", p.Name+" (Level "+fmtInt(p.Level)+") died in Area "+World.Areas[ai].Name)
                             // Persons自体は履歴保持のため残す（完全削除したい場合はここで削除）
                         } else {
                             // 生存: レベルアップと収入増分
                             p.Level++
                             World.Persons[pi] = p
                             World.Areas[ai].Income += job.Income
+                            // 行動ログ（レベルアップ）
+                            addLog("acted", p.Name+" leveled up to "+fmtInt(p.Level))
                         }
                     }
                     break
